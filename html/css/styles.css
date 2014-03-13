@@ -1,0 +1,141 @@
+/* Disable certain interactions on touch devices */
+body { 
+	-webkit-touch-callout: none; 
+	-webkit-text-size-adjust: none; 
+	-webkit-user-select: none; 
+	-webkit-highlight: none; 
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	background-color: transparent;
+	background: none;
+}
+
+.leftColumn {
+	padding-left: 10px;
+}
+
+.playerList {
+	margin-right: 20px;
+}
+
+.playerList a.ui-btn {
+	text-align: left;
+	font-weight: normal;
+}
+
+body * {
+	font-family: Arial;
+}
+
+.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper {
+	background-color: transparent;
+	background: none;
+}
+
+.hidden {
+	display: none !important;
+}
+
+label {
+	font-weight: normal !important;
+}
+
+hr {
+	border: 1px solid #ccc;
+	color: #CCC;
+	width: 80%;
+}
+
+p {
+	margin: 0;
+	padding: 0;
+	margin-bottom: 10px;
+}
+
+table {
+	border-collapse: separate;
+	border-spacing: 0px;
+	padding: 0;
+}
+
+td {
+	padding: 2px;
+	padding-left: 0;
+	padding-top: 0;
+	padding-right: 3px;
+}
+
+p, td, a, input, label, .ui-btn, li {
+	font-weight: normal;
+}
+
+/* hide the jQueryMobile spinner */
+.ui-icon-loading {
+	display: none !important;
+	opacity: 0;
+}
+
+.iconList img {
+	max-height: 20px;
+	padding: 2px;
+}
+.iconList {
+	padding-right: 10px;
+	float: right;
+	height: 20px;
+	margin-top:-20px;
+}
+
+
+/* tabbed-content content & button styles */
+.tab-content {
+	display: none;
+}
+.tabs .ui-btn-corner-all, .tabs .ui-btn.ui-corner-all {
+    border-radius: 0.8em 0.8em 0 0;
+}
+.tabs .ui-btn-inline {
+	margin-right: 0;
+	box-shadow: none;
+}
+.tab-content-wrapper {
+	background-color: #333333;
+	margin-top:-8px;
+	padding:10px;
+}
+/* end of tabbed-content content & button styles */
+
+
+@media (max-width: 1023px) {
+	/*
+	p, td, a, input, label, .ui-btn, li, h1 {
+		font-size: 11px !important;
+	}
+	h2 {
+		font-size: 14px !important;
+	}
+	*/
+	hr.padded {
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	td.paddedtop {
+		padding-top: 5px;
+	}
+}
+@media (min-width: 1024px) {
+	/*
+	p, td, a, input, label, .ui-btn, li, h1 {
+		font-size: 20px !important;
+	}
+	h2 {
+		font-size: 30px !important;
+	}
+	*/
+	hr.padded {
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+	td.paddedtop {
+		padding-top: 10px;
+	}
+}

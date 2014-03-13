@@ -1,0 +1,24 @@
+tables:
+
+Teams
+	teamid : integer
+	sport : string
+	gender : string
+	league : string
+	
+Players
+	playerid : integer
+	name : string
+
+PlayerSports
+	playerid : integer
+	sport : string
+	
+PlayerTeams
+	playerid : integer
+	teamid : integer
+	
+Games
+	gameid : integer
+	playerid : integer
+	

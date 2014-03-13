@@ -1,0 +1,151 @@
+local storyboard = require("storyboard")
+
+local scene = storyboard.newScene()
+
+-- forward declarations
+--local object1, object2
+
+function editFieldHandler()
+    print("now in editFieldHandler")
+end
+
+function editDoneHandler()
+    print("now in editDoneHandler")
+end
+
+-- handles move up and move down for keyboard
+local fieldMoveUpTo = 0
+local fieldMoveDownTo = 0
+
+
+function fieldHandler(event)
+        
+   if ( lightboxVisible == false ) then
+    
+        if ( event.phase == "began" ) then
+            -- move the group up to show text box
+            --native.setKeyboardFocus()
+
+            transition.to(scene.view, {y=fieldMoveUpTo, time=300, onComplete=editFieldHandler})
+        end
+
+        if ( event.phase == "ended" ) then
+            transition.to(scene.view, {y=fieldMoveDownTo, time=300, onComplete=editDoneHandler})
+        end
+
+        if ( event.phase == "ended" or event.phase == "submitted" ) then
+            native.setKeyboardFocus(nil)
+        end
+   end
+end
+
+function scene:createScene( event )
+    
+    local group = self.view
+    
+    fieldMoveDownTo = scene.view.y
+    fieldMoveUpTo = scene.view.y-100
+    
+    -- this will vary depending on the sport
+    local background = display.newImageRect(group, "images/defaultbg.png", 480, 360)
+    
+    background.x = display.contentCenterX
+    background.y = display.contentCenterY
+    
+    print "createScene loaded" 
+    
+    -- button to take us to the build scene
+    
+    -- Function to handle button events
+    local function handleLogin( event )
+        
+        local newWindow = lightbox(group, "Terms of Use", "Conditions of UseWelcome to our online store! MYCOMPANY and its associates provide their services to you subject to the following conditions. If you visit or shop within this website, you accept these conditions. Please read them carefully.\n\nPRIVACY\n\nPlease review our Privacy Notice, which also governs your visit to our website, to understand our practices.\n\nELECTRONIC COMMUNICATIONS\n\nWhen you visit MYCOMPANY or send e-mails to us, you are communicating with us electronically. You consent to receive communications from us electronically. We will communicate with you by e-mail or by posting notices on this site. You agree that all agreements, notices, disclosures and other communications that we provide to you electronically satisfy any legal requirement that such communications be in writing.\n\nCOPYRIGHT\n\nAll content included on this site, such as text, graphics, logos, button icons, images, audio clips, digital downloads, data compilations, and software, is the property of MYCOMPANY or its content suppliers and protected by international copyright laws. The compilation of all content on this site is the exclusive property of MYCOMPANY, with copyright authorship for this collection by MYCOMPANY, and protected by international copyright laws.\n\nTRADE MARKS\n\nMYCOMPANYs trademarks and trade dress may not be used in connection with any product or service that is not MYCOMPANYs, in any manner that is likely to cause confusion among customers, or in any manner that disparages or discredits MYCOMPANY. All other trademarks not owned by MYCOMPANY or its subsidiaries that appear on this site are the property of their respective owners, who may or may not be affiliated with, connected to, or sponsored by MYCOMPANY or its subsidiaries.\n\nLICENSE AND SITE ACCESS\n\nMYCOMPANY grants you a limited license to access and make personal use of this site and not to download (other than page caching) or modify it, or any portion of it, except with express written consent of MYCOMPANY. This license does not include any resale or commercial use of this site or its contents: any collection and use of any product listings, descriptions, or prices: any derivative use of this site or its contents: any downloading or copying of account information for the benefit of another merchant: or any use of data mining, robots, or similar data gathering and extraction tools. This site or any portion of this site may not be reproduced, duplicated, copied, sold, resold, visited, or otherwise exploited for any commercial purpose without express written consent of MYCOMPANY. You may not frame or utilize framing techniques to enclose any trademark, logo, or other proprietary information (including images, text, page layout, or form) of MYCOMPANY and our associates without express written consent. You may not use any meta tags or any other 'hidden text' utilizing MYCOMPANYs name or trademarks without the express written consent of MYCOMPANY. Any unauthorized use terminates the permission or license granted by MYCOMPANY. You are granted a limited, revocable, and nonexclusive right to create a hyperlink to the home page of MYCOMPANY so long as the link does not portray MYCOMPANY, its associates, or their products or services in a false, misleading, derogatory, or otherwise offensive matter. You may not use any MYCOMPANY logo or other proprietary graphic or trademark as part of the link without express written permission.\n\nYOUR MEMBERSHIP ACCOUNT\n\nIf you use this site, you are responsible for maintaining the confidentiality of your account and password and for restricting access to your computer, and you agree to accept responsibility for all activities that occur under your account or password. If you are under 18, you may use our website only with involvement of a parent or guardian. MYCOMPANY and its associates reserve the right to refuse service, terminate accounts, remove or edit content, or cancel orders in their sole discretion.\n\nREVIEWS, COMMENTS, EMAILS, AND OTHER CONTENT\n\nVisitors may post reviews, comments, and other content: and submit suggestions, ideas, comments, questions, or other information, so long as the content is not illegal, obscene, threatening, defamatory, invasive of privacy, infringing of intellectual property rights, or otherwise injurious to third parties or objectionable and does not consist of or contain software viruses, political campaigning, commercial solicitation, chain letters, mass mailings, or any form of 'spam.' You may not use a false e-mail address, impersonate any person or entity, or otherwise mislead as to the origin of a card or other content. MYCOMPANY reserves the right (but not the obligation) to remove or edit such content, but does not regularly review posted content. If you do post content or submit material, and unless we indicate otherwise, you grant MYCOMPANY and its associates a nonexclusive, royalty-free, perpetual, irrevocable, and fully sublicensable right to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, and display such content throughout the world in any media. You grant MYCOMPANY and its associates and sublicensees the right to use the name that you submit in connection with such content, if they choose. You represent and warrant that you own or otherwise control all of the rights to the content that you post: that the content is accurate: that use of the content you supply does not violate this policy and will not cause injury to any person or entity: and that you will indemnify MYCOMPANY or its associates for all claims resulting from content you supply. MYCOMPANY has the right but not the obligation to monitor and edit or remove any activity or content. MYCOMPANY takes no responsibility and assumes no liability for any content posted by you or any third party.\n\nRISK OF LOSS\n\nAll items purchased from MYCOMPANY are made pursuant to a shipment contract. This basically means that the risk of loss and title for such items pass to you upon our delivery to the carrier.\n\n\n\n  ")
+        
+        print( "Button was pressed and released." )
+        native.setKeyboardFocus(nil)
+        --storyboard:gotoScene("scripts.scene_game", storyboardOptions)
+        
+    end
+    
+    -- establish the form layout parameters
+    local col1x, col2x, col3x, col4x
+    local row1y, rowHeight, inputWidth, inputHeight
+    
+    col1x = 40
+    col2x = 130
+    col3x = 250
+    col4x = 340
+    row1y = 160
+    rowHeight = 30
+    inputWidth = 100
+    inputHeight = 20
+    
+    -- create form elements
+
+   local introText = "In order to provide you with data on all of your devices and to provide you with the optimal amount of features and functionality, we need you to register your application or log into an existing account.\n\nIf you are an assigned user such as a team parent or a player parent and it is your first time using Coach Gizmo, please enter your to retrieve your password."
+    
+    
+    local lblIntro = formLabel(group, introText, col1x, 20, display.contentWidth - 50, 100)
+    
+    local lblActivationCode = formLabel(group, "Activation Code:", col1x, row1y - rowHeight - 10)
+    
+    local txtActivationCode = formTextField(group, col2x, lblActivationCode.y, inputWidth, inputHeight)
+    
+    local btnActivate = formButton(group, "Activate", col3x, txtActivationCode.y, handleLogin)
+    
+    local dividerLine = formHLine(group, col1x, txtActivationCode.y + 20, display.contentWidth - 50)
+    
+   -- local lblIntro = formLabelHTML(group, "intro.html", col1x, 30, 400, 140)
+    
+    -- Login title
+    local lblLogin = formHeader(group, "Login", col2x, row1y)
+     
+    -- Register title
+    local lblRegister = formHeader(group, "Register", col4x, row1y)
+    
+    -- Email label
+    local lblEmail = formLabel(group, "Email:", col1x, row1y + rowHeight)
+    
+    -- Password label
+    local lblPassword = formLabel(group, "Password:", col1x, row1y + rowHeight*2)
+    
+    -- Password label
+    local lblForgot = formLabel(group, "Forgot your login information?", col1x, row1y + rowHeight*3)
+    
+    -- Email label
+    local lblEmailReg = formLabel(group, "Email:", col3x, row1y + rowHeight)
+    
+    -- Password label
+    local lblPasswordReg = formLabel(group, "Password:", col3x, row1y + rowHeight*2)
+    
+    -- Confirm Password label
+    local lblPasswordConfirm = formLabel(group, "Confirm PW:", col3x, row1y + rowHeight*3)
+    
+    -- email login input
+    local txtEmailLogin = formTextField(group, col2x, row1y + rowHeight, inputWidth, inputHeight)
+    
+    -- email password input
+    local txtPasswordLogin = formTextField(group, col2x, row1y + rowHeight * 2 + 5, inputWidth, inputHeight)
+    
+    -- email register input
+    local txtEmailRegister = formTextField(group, col4x, row1y + rowHeight, inputWidth, inputHeight)
+    
+    -- password register input
+    local txtPasswordRegister = formTextField(group, col4x, row1y + rowHeight* 2 + 5, inputWidth, inputHeight)
+    
+    local loginBtn = formButton(group, "Login", col1x, lblPassword.y + rowHeight * 2, handleLogin)
+    
+    local registerBtn = formButton(group, "Register", col3x, lblPassword.y + rowHeight * 2, handleLogin)
+    
+    
+end
+
+-- If scene's view is removed, scene:destroyScene() will be called just prior to:
+function scene:destroyScene( event )
+    local group = self.view    
+end
+
+scene:addEventListener( "createScene", scene )
+scene:addEventListener( "destroyScene", scene )
+
+return scene

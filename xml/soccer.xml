@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+ 
+<game language="en" name="Soccer">
+	
+	<!-- 
+		options for grid:
+			lineColor = R,G,B
+			bgColor = R,G,B,Alpha
+	-->
+	<grid 
+		lineColor="255,255,0" 
+		bgColor="0,0,0,0" 
+		strokeWidth="2"
+		rows="6"
+		cols="8"
+	>
+	</grid>
+	
+	<!--
+		options for items:
+			layout= horizontal, vertical
+			orientation = bottom, left, right, top
+			itemType = person, letter, number
+	-->
+	<items
+		layout="vertical"
+		orientation="left"
+		itemType="person"
+		maxItems="7"
+	>
+	</items>
+	
+	<items
+		layout="horizontal"
+		orientation="bottom"
+		itemType="person"
+		maxItems="7"
+	>
+	</items>
+	
+	<items
+		layout="horizontal"
+		orientation="top"
+		itemType="person"
+		maxItems="7"
+	>
+	</items>	
+
+	<items
+		layout="vertical"
+		orientation="right"
+		itemType="person"
+		maxItems="5"
+	>
+	</items>
+</game>

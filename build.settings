@@ -1,0 +1,61 @@
+-- Supported values for orientation:
+-- portrait, portraitUpsideDown, landscapeLeft, landscapeRight
+
+settings = {
+	
+	orientation = {
+		default = "landscapeRight",
+		supported =
+ 		{
+ 		 "landscapeRight", "landscapeLeft"
+		}
+	},
+	androidPermissions =
+       {
+           "android.permission.INTERNET",
+           "android.permission.CAMERA",
+           "android.permission.WRITE_EXTERNAL_STORAGE",
+       },
+       android={
+           largeHeap = true
+       },
+	iphone = {
+		plist = {
+			UIStatusBarHidden = true,
+			UIApplicationExitsOnSuspend = false,
+
+            FacebookAppID = "162489733959875",
+
+            CFBundleIconFile = "Icon.png",
+            CFBundleIconFiles = {
+				"Icon.png",
+				"Icon@2x.png",
+				"Icon-60.png",
+				"Icon-60@2x.png",
+				"Icon-72.png",
+				"Icon-72@2x.png",
+				"Icon-76.png",
+				"Icon-76@2x.png",
+            },
+	        UIAppFonts =
+             {
+                --"GROBOLD.ttf" ,
+                --"GROBOLD.otf" ,                
+             },
+
+            -- iOS app URL schemes:
+            CFBundleURLTypes =
+            {
+                {
+                    CFBundleURLSchemes =
+                    {
+                        "fb162489733959875",
+			
+                    }
+                }
+            }
+
+		}
+	},
+
+}

@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=320, target-
+ densityDpi=device-dpi, user-scalable=no, initial-scale=1.0, minimum-
+ scale=1.0, maximum-scale=1.0"/> 
+	<title>Coach Gizmo - Registration</title>
+	<link rel="stylesheet" href="css/jquery.mobile.min.css">
+	<script src="js/jquery.js"></script>
+	
+	<!--
+	<script src="js/IndexedDBShim.min.js"></script>
+	<script src="js/jquery.indexeddb.js"></script>
+	-->
+	
+	<script src="js/pouchdb-nightly.min.js"></script>
+	
+	<script type="text/javascript">
+	// this MUST be before jquerymobile inclusion to remove button hover markup
+	$(document).bind("mobileinit", function() {
+		$.mobile.buttonMarkup.hoverDelay = 0;
+		$.mobile.activeBtnClass = 'unused';
+	});	
+	</script>
+	<script src="js/jquery.mobile.min.js"></script>
+	<script src="js/jquery.getUrlParam.js"></script>
+	<script src="js/localstoragedb.js"></script>
+	
+	<!-- methods for cloudant storage & syncing -->
+	<script src="js/db.js"></script>
+	
+	<!-- methods for LS database retrieval -->
+	<script src="js/sportdb.js"></script>
+	
+	<!-- UI bindings -->
+	<script src="js/script.js"></script>
+	<script src="js/data-en.js"></script>
+	<script src="js/fastclick.js"></script>
+
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="container">
+
+	<div data-role="page">
+		<div role="content" class="ui-content">
+		</div>
+	</div>
+
+	<div data-role="page" id="homeLoggedIn" data-title="Welcome!">
+
+		<div role="content" class="ui-content">
+	
+			<div>
+				<table width="100%">
+					<tr>
+						<td style="width:90%;"><h3>Welcome Back!</h3></td>
+						<td align=right>handle@domain.com</td>
+						<td align=right><a data-role="button" href="#loginRegister" data-inline="true" data-mini="true">Logout</a></td>
+					</tr>
+				</table>
+			</div>
+	
+			<div class="tabs" id="sportsTabs">
+				<a class="tab open" ref="tab-sport-1" data-role="button" data-inline="true">
+					Baseball
+				</a>
+				<a class="tab" ref="tab-sport-2" data-role="button" data-inline="true">
+					Basketball
+				</a>
+				<a class="tab" ref="tab-sport-3" data-role="button" data-inline="true">
+					Hockey
+				</a>
+				<a href="#loginRegister" class="tab" ref="tab-sport-4" data-role="button" data-inline="true">
+					login
+				</a>
+			</div>
+			
+			<div id="sportsAccordion" class="tab-content-wrapper" style="background-color: #333;">
+			
+				<div class="tab-content" data-role="collapsible-set" id="tab-sport-1">
+					<div data-role="collapsible" data-collapsed="false">
+						<h3>Team A</h3>
+						<p>I'm the collapsibleset content for section A.</p>
+					</div>
+					<div data-role="collapsible">
+						<h3>Team B</h3>
+						<p>I'm the collapsibleset content for section B.</p>
+					</div>
+					<div data-role="collapsible">
+						<h3>Team C</h3>
+						<p>I'm the collapsibleset content for section B.</p>
+					</div>
+					<div data-role="collapsible">
+						<h3>Team D</h3>
+						<p>I'm the collapsibleset content for section B.</p>
+					</div>								
+				</div>
+			
+				<div class="tab-content" data-role="collapsible-set" id="tab-sport-2">
+					<div data-role="collapsible" data-collapsed="false">
+						<h3>Team F</h3>
+						<p>I'm the collapsibleset content for section A.</p>
+					</div>
+					<div data-role="collapsible">
+						<h3>Team G</h3>
+						<p>I'm the collapsibleset content for section B.</p>
+					</div>
+					<div data-role="collapsible">
+						<h3>Team H</h3>
+						<p>I'm the collapsibleset content for section B.</p>
+					</div>
+					<div data-role="collapsible">
+						<h3>Team I</h3>
+						<p>I'm the collapsibleset content for section B.</p>
+					</div>								
+				</div>
+			
+				<div class="tab-content" data-role="collapsible-set" id="tab-sport-3">
+					<div data-role="collapsible" data-collapsed="false">
+						<h3>Team J</h3>
+						<p>I'm the collapsibleset content for section A.</p>
+					</div>
+					<div data-role="collapsible">
+						<h3>Team K</h3>
+						<p>I'm the collapsibleset content for section B.</p>
+					</div>
+					<div data-role="collapsible">
+						<h3>Team L</h3>
+						<p>I'm the collapsibleset content for section B.</p>
+					</div>
+					<div data-role="collapsible">
+						<h3>Team M</h3>
+						<p>I'm the collapsibleset content for section B.</p>
+					</div>								
+				</div>
+			
+				<div class="tab-content" data-role="collapsible-set" id="tab-sport-4">
+					<div data-role="collapsible" data-collapsed="false">
+						<h3>Team N</h3>
+						<p>I'm the collapsibleset content for section A.</p>
+					</div>
+					<div data-role="collapsible">
+						<h3>Team O</h3>
+						<p>I'm the collapsibleset content for section B.</p>
+					</div>
+					<div data-role="collapsible">
+						<h3>Team P</h3>
+						<p>I'm the collapsibleset content for section B.</p>
+					</div>
+					<div data-role="collapsible">
+						<h3>Team Q</h3>
+						<p>I'm the collapsibleset content for section B.</p>
+					</div>								
+				</div>
+			</div>							
+		</div>
+	</div>
+	
+	<!-- page -->
+	<div data-role="page" data-title="Login/Register" id="loginRegister">
+
+		<div data-role="content">
+			<div id="page"></div>
+			
+			<p>
+			In order to provide you with data on all of your devices and to provide you with the optimal amount of features and functionality, we need you to <b>register your application</b> or <b>log into an existing account</b>.
+			</p>
+
+			<p>
+			If you are an <b>assigned user</b> such as a <b>team parent</b> or a <b>player parent</b> and it is your first time using Coach Gizmo, please enter your <b>Activation Code</b> to retrieve your password.
+			</p>
+			
+			<div>
+				<table width=100%>
+					<tr>
+						<td nowrap width=200>Activation Code: </td>
+						<td><input type=text data-inline="true" id="activationCode" /></td>
+						<td>
+						
+							<a data-role="button" href="#activateAccount" data-transition="fade" id="activateAccount">Activate</a>						
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			<hr />
+			
+			<table width=100%>
+				<tr>
+					<!-- login -->
+					<td width=50% valign=top align=center>
+					
+						<table>
+							<tr><td colspan=2 align=center><b>Login</b></td></tr>
+							<tr><td>Email:</td><td><input type=text data-inline="true" id="loginEmail"></td></tr>
+							<tr><td>Password:</td><td><input type=password data-inline="true" id="loginPassword" /></td></tr>
+							<tr><td colspan=2>Forgot your login information?</td></tr>
+							<tr><td><a data-role="button" data-inline="true" id="btnLogin">Login</a></td><td><input type=checkbox id="keepLoggedIn" /><label for="keepLoggedIn">Keep me logged in</label></td></tr>
+						</table>
+					
+					</td>
+					
+					<!-- coach register -->
+					<td width=50% valign=top align=center>
+					
+						<table>
+							<tr><td colspan=2 align=center><b>Coach Register</b></td></tr>
+							<tr><td>Email:</td><td><input type=text data-inline="true" id="registerEmail"></td></tr>
+							<tr><td>Password:</td><td><input type=password data-inline="true" id="registerPassword"></td></tr>
+							<tr><td colspan=2>Forgot your login information?</td></tr>
+							<tr><td><a data-role="button" data-inline="true" id="btnLogin">Register</a></td>
+								<td><input type=checkbox id="termsAgree" /><label for="termsAgree">I agree to the terms of use</a></td>
+							</tr>
+							<tr><td colspan=2><a href="#termsOfUse" data-transition="pop">Terms of Use</a></td></tr>
+							
+					
+						</table>					
+					
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+	<!-- tab 2: choose a sport (setup wizard, step 1) -->
+	<div data-role="page" id="chooseSport" data-title="Choose a Sport">
+		<div data-role="content">
+			<div>
+			<h2>Step 1. Choose a sport:
+				<select name="selChooseSport" id="selChooseSport" data-inline="true">
+					<option value="baseball">Baseball</option>
+					<option value="basketball">Basketball</option>
+					<option value="football">Football</option>
+					<option value="hockey">Hockey</option>
+					<option value="lacrosse">Lacrosse</option>
+					<option value="soccess">Soccer</option>
+				</select>
+			</h2>
+			</div>
+			
+			<div><hr class="padded" /></div>
+			
+			<div>
+				<p>For first time users, we have set up an easy 4-step wizard to get you started:</p>
+				<p><b>Step 1:</b> Choose a sport</p>
+				<p><b>Step 2:</b> Create a team</p>
+				<p><b>Step 3:</b> Add players</p>
+				<p><b>Step 4:</b> Assign players to teams (players can play on multiple teams)</p>
+			</div>
+				
+			<div><hr class="padded" /></div>
+			
+			<div>
+				<p>When you are ready to create lineups, simply click on the "Games" tab, select a team and configure your lineups... it's as easy as 1, 2, 3!</p>
+			</div>
+			
+			<a data-role="button" id="createTeam" href="#createTeam">Next Step &raquo;</a>
+		</div>
+	</div>
+	
+	<!-- setup wizard, step 2 -->
+	<div data-role="page" id="createTeam" data-title="Create a Team">
+		<div data-role="content">
+			<div>
+				<h2>Step 2: Create a <span class="globals" var="sportName"></span> team</h2>
+			</div>
+			
+			<div><hr class="padded" /></div>
+			
+			<div>
+				<table>
+					<tr><td>Team Name: </td><td><input id="txtNewTeamName" type="text" data-inline="true" /></td></tr>
+					<tr><td>Girls/Boys: </td><td>
+					<select name="gender" id="gender" data-inline="true">
+						<option value="Boys">Boys</option>
+						<option value="Girls">Girls</option>
+						<option value="Mixed">Mixed</option>
+					</select>
+					</td></tr>
+					
+					<tr><td>League: </td><td>
+					<select name="league" id="league" data-inline="true">
+						<option value="AYSO">AYSO</option>
+						<option value="Adult League">Adult League</option>
+						<option value="Club">Club</option>
+						<option value="College">College</option>
+						<option value="High School">High School</option>
+						<option value="Junior High">Junior High</option>
+						<option value="Professional">Professional</option>
+					</select>
+					</td></tr>
+					
+					<tr><td>Add Data: </td><td><a data-inline="true" data-role="button" href="#adddata">New Data</a></td></tr>
+				
+				</table>
+			
+				<a data-role="button" id="btnCreateTeam" href="#">Next Step &raquo;</a>
+				
+				<a class="hidden" id="noTeamNamePopup" data-rel="popup" data-position-to="window" data-transition="pop" href="#noTeamNameAlert">popup</a>	
+				
+			</div>
+		</div>
+		
+		<!-- incomplete team name popup -->
+		<div data-role="popup" data-overlay-theme="a" data-theme="a" class="ui-corner-all" id="noTeamNameAlert">
+			<div data-role="header" data-theme="a" class="ui-corner-top">
+				<h1>Attention!</h1>
+			
+				<div data-role="content">
+					<p>Please enter a team name.</p>
+					<p><a data-role="button" data-rel="back">Try Again</a></p>
+				</div>
+			
+			</div>
+		</div>
+	</div>		
+	
+	<div data-role="page" id="addPlayers">
+		<div data-role="content">
+			<div>
+				<table width="100%">
+				<tr><td>
+					<h2>Step 3: Add players (for all teams, all sports)</h2>
+				</td><td align="right">
+					<a data-role="button" href="#assignPlayers">Assign Players to <span class="globals" var="currentTeam"></span></a>
+				</td></tr>
+				</table>
+				
+			</div>
+			
+			<div><hr class="padded" /></div>
+			
+			<div>
+				<table width="100%">
+					<tr>
+						<td width="50%" valign="top">
+							<!-- players & sports -->
+							<table>
+								<tr>
+									<td>Player Name: </td>
+									<td><input id="txtPlayerName" type="text" data-inline="true" /></td>
+								</tr>
+								
+								<tr>
+									<td valign="top" class="paddedtop">Sports: </td>
+									<td>
+										<fieldset data-role="controlgroup" id="playerSports" class="needsclick">
+											<input class="needsclick" id="baseball" type="checkbox" />
+											<label for="baseball">Baseball</label>
+										
+											<input class="needsclick" id="basketball" type="checkbox" />
+											<label for="basketball">Basketball</label>
+										
+											<input class="needsclick" id="football" type="checkbox" />
+											<label for="football">Football</label>
+										
+											<input class="needsclick" id="hockey" type="checkbox" />
+											<label for="hockey">Hockey</label>
+										
+											<input class="needsclick" id="lacrosse" type="checkbox" />
+											<label for="lacrosse">Lacrosse</label>
+										
+											<input class="needsclick" id="soccer" type="checkbox" />
+											<label for="soccer">Soccer</label>
+										</fieldset>
+									</td>
+								</tr>
+								
+								<tr>
+									<td colspan=2>
+										<a id="btnCancel" data-rel="back" data-inline="true" data-role="button">Cancel</a>
+										
+										<a id="btnAddPlayer" data-inline="true" data-role="button">Add Player</a>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td valign="top">
+							<!-- list of current players -->
+							<div>
+								<h3>Current Players</h3>
+							</div>
+							
+							<div>
+								<ul id="lstCurrentPlayers" class="dblist" dbtable="players" dbfield="name" data-inset="true" data-role="listview" data-filter="true" data-filter-placeholder="Search Players...">
+								</ul>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<div data-role="page" id="viewPlayer">
+		<div data-role="content">
+			<div>
+				<table width="100%">
+				<tr><td>
+					<h2>Step 5: Edit Assigned Player
+						<a href="#" data-inline="true" data-role="button" id="unassignPlayer">Unassign Player</a>
+					</h2>
+				</td><td align="right">
+					<h2>Team: <span class="globals" var="currentTeam"></span></h2>
+				</td></tr>
+				</table>
+				
+			</div>
+			
+			<div><hr class="padded" /></div>
+			
+			<div>
+				<table width="100%">
+					<tr>
+						<td width="50%" valign="top">
+							<!-- players & sports -->
+							<table width="100%">
+								<tr>
+									<td colspan=2><h3>Player Information</h3></td>
+								</tr>
+								
+								<tr>
+									<td>Name:</td>
+									<td><input id="txtPlayerInfoName" type="text" data-inline="true" class="db" dbtable="players" dbfield="name" var="currentPlayer" /></td>
+								</tr>
+								<tr>
+									<td>Jersey:</td>
+									<td>
+										<!--
+											class = "db" => fetch value from localstorage
+											dbtable = db table to get value from
+											dbfield = db table field to get value from
+											dbref = primary key field
+										-->
+										<select name="playerJersey" id="playerJersey" class="selectRange db" rangeStart="0" rangeEnd="99" dbtable="players" dbfield="jersey" ></select>
+									</td>
+								</tr>
+								<tr>
+									<td>Age:</td>
+									<td>
+										<select name="playerAge" id="playerAge" class="selectRange db" rangeStart="4" rangeEnd="99" dbtable="players" dbfield="age" ></select>
+									</td>
+								</tr>
+								<tr>
+									<td>Years of Exp:</td>
+									<td>
+										<select name="playerExp" id="playerExp" class="selectRange db" rangeStart="0" rangeEnd="20" dbtable="players" dbfield="exp" ></select>
+									</td>
+								</tr>	
+								<tr>
+									<td>Rank:</td>
+									<td>
+										<select name="playerRank" id="playerRank" class="selectRange db" rangeStart="0" rangeEnd="99" dbtable="players" dbfield="rank" ></select>
+									</td>
+								</tr>	
+								<tr>
+									<td>Phone:</td>
+									<td><input id="txtPlayerPhone" type="text" data-inline="true" class="db" dbtable="players" dbfield="phone" /></td>
+								</tr>	
+								<tr>
+									<td>Email:</td>
+									<td><input id="txtPlayerEmail" type="text" data-inline="true" class="db" dbtable="players" dbfield="email" /></td>
+								</tr>																					
+								
+								<tr>
+									<td colspan=2>
+										<a id="btnCancel" data-rel="back" data-inline="true" data-role="button">&laquo; Back</a>
+										
+										<a data-inline="true" data-role="button" class="dbupdate" data-rel="popup" data-position-to="window" data-transition="pop" href="#popupUpdate">Update</a>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td valign="top">
+							
+							<div class="leftColumn">
+								<!-- list of current players -->
+								<div>
+									<h3>Position Information</h3>
+								</div>
+							
+							
+								<div>
+									<!-- position 1 -->
+									<select id="lstPositionInfo1" data-inset="true"  class="jsdata" key="positions">
+										<option>Position 1</option>
+									</select>
+								
+									<!-- position 2 -->
+									<select id="lstPositionInfo2" data-inset="true"  class="jsdata" key="positions">
+										<option>Position 2</option>
+									</select>
+								
+									<!-- position 3 -->
+									<select id="lstPositionInfo3" data-inset="true"  class="jsdata" key="positions">
+										<option>Position 3</option>
+									</select>
+								
+									<!-- position 4 -->
+									<select id="lstPositionInfo4" data-inset="true"  class="jsdata" key="positions">
+										<option>Position 4</option>
+									</select>															
+								</div>
+							
+								<div>
+									<h3>Parent Information</h3>
+								</div>
+							
+								<div>		
+									<table>
+										<tr>
+									
+											<td>Name:</td>
+											<td><input type="text" id="txtParentName" data-inline="true" class="db" dbtable="players" dbfield="pname" /></td>
+										</tr>
+										<tr>
+											<td>Phone:</td>
+											<td><input type="text" id="txtParentPhone" data-inline="true" class="db" dbtable="players" dbfield="pphone" /></td>
+										</tr>
+										<tr>
+											<td>Email:</td>
+											<td><input type="text" id="txtParentEmail" data-inline="true" class="db" dbtable="players" dbfield="pemail" /></td>
+										</tr>
+										<tr>
+											<td colspan=2>
+												<a data-rel="back" data-inline="true" data-role="button">&laquo; Back</a>
+												<a data-inline="true" data-role="button" class="dbupdate" data-rel="popup" data-position-to="window" data-transition="pop" href="#popupUpdate">Update</a>
+
+												<a data-inline="true" data-role="button">Activate</a>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div> <!-- leftColumn -->
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+		<div data-role="popup" id="popupUpdate" data-overlay-theme="a" data-theme="a" class="ui-corner-all">
+			<div data-role="header" data-theme="a" class="ui-corner-top">
+				<h1>Success!</h1>
+			</div>
+			<div role="main" class="ui-corner-bottom ui-content">
+				<p>Your changes have been saved.</p>
+			</div>
+		</div>		
+	</div>
+	
+	<div data-role="page" id="assignPlayers">
+		<div data-role="content">
+			<div>
+				<table width="100%">
+					<tr>
+						<td>
+							<h2>Step 4: Assign players to your team</h2>
+						</td>
+						<td align="right">
+							<h2>Team: <span class="globals" var="currentTeam"></span></h2>
+						</td>
+					</tr>
+				</table>
+				
+			</div>
+			
+			<div><hr class="padded" /></div>
+			
+			<div>
+				<table width="100%">
+					<tr>
+						<td width="50%" valign="top">
+							<!-- players & sports -->
+							<table width="100%">
+								<tr>
+									<td valign="bottom">
+										<p>Assigned Players</p>
+									</td>
+									<td align="right">
+										<a id="removeFromTeam" data-role="button" data-inline="true">Remove From Team &raquo;</a>
+									</td>
+								</tr>
+								
+								<tr>
+									<td colspan=2>
+				
+										<ul id="assignedPlayers" data-inset="true" data-role="listview">
+										</ul>
+				
+									</td>
+								</tr>
+								<tr>
+									<td colspan=2>
+										<a data-role="button" data-inline="true" href="#" data-rel="back">&laquo; Back</a>
+									</td>
+								</tr>								
+
+							</table>
+						</td>
+						<td valign="top">
+							<!-- list of current players -->
+							<table width="100%">
+								<tr>
+									<td valign="bottom"><a id="assignToTeam" data-role="button" data-inline="true">&laquo; Assign to Team</a>
+									</td>
+									<td align="right" valign="bottom">
+										<p>Available Players</p>
+									</td>
+								</tr>
+								<tr>
+									<td colspan=2>
+							
+										<ul id="availablePlayers" data-inset="true" data-role="listview" class="dblist" dbtable="players" dbfield="name">
+											<!-- this list to be populated from the localstorage database -->
+										</ul>
+
+									</td>
+								</tr>
+								
+								<tr>
+									<td colspan=2 align="right">
+										<a data-role="button" data-inline="true" href="#setupGame">Setup my 1st Game &raquo;</a>
+									</td>
+								</tr>
+							</table>	
+
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<div data-role="page" id="setupGame">
+		<div data-role="content">
+			Setup game page
+		</div>
+	</div>
+	
+	<!-- tab 3: calendar -->
+	<div data-role="page" id="calendar">
+		<div data-role="content">
+			This is the calendar page
+		</div>
+	</div>	
+	
+	<!-- tab 4: media -->
+	<div data-role="page" id="media">
+		<div data-role="content">
+			This is the photos/videos page
+		</div>
+	</div>		
+	
+	<!-- tab 5: playbook -->
+	<div data-role="page" id="playbook">
+		<div data-role="content">
+			This is the playbook page
+		</div>
+	</div>			
+	
+	<!-- tab 6: reports -->
+	<div data-role="page" id="reports">
+		<div data-role="content">
+			This is the reports page
+		</div>
+	</div>		
+	
+	<!-- coach account activation, step 2 -->
+	<div data-role="page" id="activateAccount">
+
+		<div data-role="content">
+			<p><b>Account Activation Step 2</b></p>
+			
+			<p>Thank you for registering with Coach Gizmo!</p>
+			
+			<p>you will be receiving an email shortly with an activation code. Please copy the code and paste it into the field below and your activation will be complete.</p>
+			
+			<p>Once we have verified you as the account holder, you can get started Coaching!</p>
+			
+			<hr />
+			
+			<!-- activate account mini-form -->
+			<table>
+				<tr>
+					<td>Email: </td>
+					<td><input type="text" value="darrengates@gmail.com" name="activateEmail" id="activateEmail" /></td>
+				</tr>
+				<tr>
+					<td>Password: </td>
+					<td><input value="Mu$ic123" type="password" name="activatePassword" id="activatePassword" /></td>
+				</tr>
+				<tr>
+					<td>Code: </td>
+					<td><input type="text" value="test123" name="activateCode" id="activateCode" /></td>
+				</tr>				
+				<tr>
+					<td>
+					
+						<a data-role="button" class="checkFields" passwordField="activatePassword" emailField="activateEmail" href="#" id="activateAccount2">Activate Account</a>
+
+						<!-- activate email alert -->
+						<a class="hidden" id="activateEmailAlert" data-rel="popup" data-position-to="window" data-transition="pop" href="#emailAlert">popup</a>	
+						
+						<!-- activate password alert -->
+						<a class="hidden" id="activatePasswordAlert" data-rel="popup" data-position-to="window" data-transition="pop" href="#passwordAlert">popup</a>							
+					
+						<!-- return control to corona -->
+						<!--
+						<form id="loadGame" action="login.html?page=loadGame"></form>
+						-->
+						
+						<!-- open wizard, step 1 -->
+						<!--
+						<form id="setupWizard" action="login.html?page=chooseSport"></form>
+						-->
+					</td>
+					<td>
+						<input type=checkbox id="keepMeLoggedIn" />
+						<label for="keepMeLoggedIn">Keep me Logged In</label>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<!--
+		<div data-role="popup" data-overlay-theme="a" data-theme="a" class="ui-corner-all" id="noTeamNameAlert">
+			<div data-role="header" data-theme="a" class="ui-corner-top">
+				<h1>Attention!</h1>
+			
+				<div data-role="content">
+					<p>Please enter a team name.</p>
+					<p><a data-role="button" data-rel="back">Try Again</a></p>
+				</div>
+			</div>
+		</div>	
+		-->
+		
+		<!-- the 2 alerts related to this page -->
+		<!-- password alert popup -->
+		<div data-role="popup" data-overlay-theme="a" data-theme="a" class="ui-corner-all" id="passwordAlert">
+			<div data-role="header" data-theme="a" class="ui-corner-top">
+				<h1>Attention!</h1>
+		
+				<div data-role="content">
+					<p>Password must contain:</p>
+			
+					<p>
+						<ol>
+							<li>8 characters</li>
+							<li>1 capital letter</li>
+							<li>1 special character (!@#$%^&*-)</li>
+						</ol>
+					</p>
+					<p><a data-role="button" data-rel="back">Try Again</a></p>
+				</div>
+		
+			</div>
+		</div>
+
+		<!-- email syntax alert popup -->
+		<div data-role="popup" data-overlay-theme="a" data-theme="a" class="ui-corner-all" id="emailAlert">
+			<div data-role="header" data-theme="a" class="ui-corner-top">
+				<h1>Attention!</h1>
+		
+				<div data-role="content">
+					<p>Please enter a valid email address.</p>
+					<p><a data-role="button" data-rel="back">Try Again</a></p>
+				</div>
+		
+			</div>
+		</div>
+
+		
+	</div>
+	
+	
+	<!-- terms of use popup -->
+
+	<div data-role="page" data-dialog="true" id="termsOfUse">
+		<div data-role="header">
+			<h1>Terms of Use</h1>
+		</div>
+		<div data-role="content">
+		<h2>
+			Web Site Terms and Conditions of Use
+		</h2>
+
+		<h3>
+			1. Terms
+		</h3>
+
+		<p>
+			By accessing this web site, you are agreeing to be bound by these 
+			web site Terms and Conditions of Use, all applicable laws and regulations, 
+			and agree that you are responsible for compliance with any applicable local 
+			laws. If you do not agree with any of these terms, you are prohibited from 
+			using or accessing this site. The materials contained in this web site are 
+			protected by applicable copyright and trade mark law.
+		</p>
+
+		<h3>
+			2. Use License
+		</h3>
+
+		<ol type="a">
+			<li>
+				Permission is granted to temporarily download one copy of the materials 
+				(information or software) on Coach Gizmo's web site for personal, 
+				non-commercial transitory viewing only. This is the grant of a license, 
+				not a transfer of title, and under this license you may not:
+	
+				<ol type="i">
+					<li>modify or copy the materials;</li>
+					<li>use the materials for any commercial purpose, or for any public display (commercial or non-commercial);</li>
+					<li>attempt to decompile or reverse engineer any software contained on Coach Gizmo's web site;</li>
+					<li>remove any copyright or other proprietary notations from the materials; or</li>
+					<li>transfer the materials to another person or "mirror" the materials on any other server.</li>
+				</ol>
+			</li>
+			<li>
+				This license shall automatically terminate if you violate any of these restrictions and may be terminated by Coach Gizmo at any time. Upon terminating your viewing of these materials or upon the termination of this license, you must destroy any downloaded materials in your possession whether in electronic or printed format.
+			</li>
+		</ol>
+ 
+		</div>
+	</div>
+
+	<script type="text/javascript">		
+		$(function() {			
+			// activate FastClick
+			FastClick.attach(document.body);
+			
+			// allows loading of jquerymobile pages from Corona
+			var loc = $(document).getUrlParam("page");
+	
+			if ( loc != null ) {
+				$.mobile.navigate("#" + loc, { transition: "fade" } );
+			}	
+		});
+	</script>
+</body>
+</html>
