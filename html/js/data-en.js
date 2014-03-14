@@ -81,10 +81,10 @@ var data = {
 			'Hot',
 			'Sweltering'
 		]
-	},
+	}, 
 	fields : {
-		/* key : [ text, type, size ] */
-		age 		: [ 'Age', 'text', 50 ],
+		/* key : [ text, type, size ]  */
+		age 		: [ 'Age', 'text', 60 ],
 		fieldtype 	: [ 'Field Type', 'text', 100 ],
 		logophoto 	: [ 'Logo/Photo', 'binary', 0 ],
 		region 		: [ 'Region', 'text', 50 ],
