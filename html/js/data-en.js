@@ -78,7 +78,7 @@ var data = {
 		temperature : [
 			'Cold',
 			'Average',
-			'Hot',
+			'Hot', 
 			'Sweltering'
 		]
 	}, 
