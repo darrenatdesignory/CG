@@ -231,7 +231,25 @@ $(document).on("tap", "#btnCreateTeam", function() {
 	else {
 		globals.currentTeam = $("#txtNewTeamName").val();
 		
-		var teamID = globals.lib.insert("teams", {name: globals.currentTeam, gender: $("#gender").val(), league: $("#league").val(), sport : globals.sportKey});
+		/* fetch the values of "added fields" */
+		
+		var dataToSave = new Object();
+		dataToSave.name = globals.currentTeam;
+		dataToSave.gender = $("#gender").val();
+		dataToSave.league = $("#league").val();
+		dataToSave.sport = globals.sportKey;
+		
+		var addedData = new Object();
+		
+		var i = 0;
+		
+		$("#createTeam .added-field").each(function() {
+			addedData[$(this).attr('name') + '_' + i++] = $(this).val();
+		});
+		
+		dataToSave.xdata = addedData;
+			
+		var teamID = globals.lib.insert("teams", dataToSave);
 		
 		globals.currentTeamID = teamID;
 		
@@ -270,8 +288,22 @@ $(document).on("tap", "#lstCurrentPlayers li, .playerName", function() {
 
 $(document).on("tap", "#createTeam", function() {
 
+				/*
+				accordion += '<div class="ui-block-a"><h4>Team Data &nbsp;&nbsp;&nbsp;<a href="#createTeam" data-role=button data-mini=true data-inline=true teamID="' + teamID + '" sportKey="' + sports[i][j].sport + '">Edit</a></h4>';
+				*/
+				
+				
 	globals.sportKey = $("#selChooseSport").val();
 	globals.sportName = $("#selChooseSport option:selected").text();
+	
+	/* forces add mode for the create team page */
+	globals.currentTeamID = false;
+});
+
+/* tap event for "Edit" button next to "Team Data" */
+$(document).on("tap", "#editTeamData", function() {
+	globals.sportKey = $(this).attr('sportKey');
+	globals.currentTeamID = $(this).attr('teamID');
 });
 
 /*
@@ -294,6 +326,27 @@ $(document).on('pagebeforeshow', function() {
 		/* init jQueryMobile button styles */
 		//$('.playerName').trigger('create');
 	}
+	else if ( pageID == 'createTeam' ) {
+		/* check to see if we are editing an existing team, or creating a new team */
+		
+		if ( globals.currentTeamID > 0 ) {
+			console.log('editing an existing team' );
+			
+			var teamObj = sportdb.getTeam(globals.currentTeamID);
+			
+			globals.currentTeam = teamObj.name;
+			
+			$("div h2").html("Edit team: " + teamObj.name);
+			
+			$("#txtNewTeamName").val(teamObj.name);
+			$("select#gender").val(teamObj.gender);
+			$("select#league").val(teamObj.league);
+			
+			/* need to add the 'xdata' field data */
+			
+			console.log(teamObj);
+		}
+	}
 	
 	/* replace any DOM objects with class "globals" with the global var */
 	$("#" + pageID + " .globals").each(function() {
@@ -306,7 +359,61 @@ $(document).on('pagebeforeshow', function() {
 			
 		// what about select lists??
 	});
+	
+	/* A select that must be populated from the javascript data file */
+	$("#" + pageID + " select.jsdata").each(function() {
 
+		var selectObj = $(this);
+		
+		var dbKey1 = $(this).attr('key1');
+		var dbKey2 = $(this).attr('key2');
+		var dataToPopulate = "";
+	
+		if ( dbKey2 != undefined ) {
+		
+			if ( dbKey2.indexOf("globals.") != -1 ) {
+				dbKey2 = dbKey2.replace("globals.","");
+				dbKey2 = globals[dbKey2];
+			}
+		
+			dataToPopulate = data[dbKey1][dbKey2];
+		
+		}
+		else {
+			dataToPopulate = [];
+			
+			for ( var i in data[dbKey1] ) {
+				dataToPopulate.push( [i, data[dbKey1][i]] );
+			}
+		}
+		
+		var optionsValues = "";
+		var i = 0;
+		var selected = "";
+		
+		$.each(dataToPopulate, function() {
+			//selectObj.append($("<option />").val(this).text(this));
+			
+			selected = (++i <= 1) ? "selected" : "";
+			
+			if ( Array.isArray(this) ) {
+
+				/* this is a complex value list, like "fields" */
+				optionsValues += "<option fieldtype='" + this[1][1] + "' fieldsize='" + this[1][2] + "' " + selected + " value='" + this[0] + "'>" + this[1][0] + "</option>";
+			}
+			else {
+				/* this is a simple value list */
+				optionsValues += "<option " + selected + " value='" + this + "'>" + this + "</option>";
+			}
+		});
+		
+		selectObj.html(optionsValues);
+		selectObj.selectmenu("refresh");
+	});
+	
+
+
+	/* An input or select that must be populated from the database */
 	$("#" + pageID + " .db").each(function() {
 	
 		var tagName = $(this)[0].tagName;
@@ -323,13 +430,14 @@ $(document).on('pagebeforeshow', function() {
 				keyValue = globals.currentTeamID;
 			
 			var res = globals.lib.query(dbTable, {ID: keyValue});
-		
+
 			if ( res[0] != null && res[0] != undefined ) {
 			
 				var fieldNewValue = res[0][dbField];
 		
 				$(this).val(fieldNewValue);
 			
+				/* this needs more work to populate select lists from database */
 				if ( tagName == 'SELECT' ) {
 					$(this).selectmenu('refresh');
 				}
@@ -337,6 +445,7 @@ $(document).on('pagebeforeshow', function() {
 		}
 	});
 	
+	/*
 	if ( globals.sportKey != '' ) {
 		$("#" + pageID + " .jsdata").each(function() {
 			var jsDataKey = $(this).attr('key');
@@ -353,6 +462,7 @@ $(document).on('pagebeforeshow', function() {
 			}
 		});
 	}
+	*/
 	
 	$("#" + pageID + " .dblist").each(function() {
 		var dbTable = $(this).attr('dbtable');
@@ -393,6 +503,21 @@ $(document).on('pagebeforeshow', function() {
 	});
 });
 
+/* The "add data" option in creating a team */
+$(document).on('tap', "#addDataBtn", function() {
+	var obj = $("#addData :selected");
+	
+	var fieldKey = obj.val();
+	var fieldText = obj.text();
+	var fieldSize = obj.attr('fieldsize');
+	var fieldType = obj.attr('fieldtype');
+	
+	var fieldData = '<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">' + "<input data-inline=true type=text size=" + 1 + " name=" + fieldKey + " class='added-field field-" + fieldKey + "'></div>";
+	
+
+	$("#addDataRow").before("<tr><td>" + fieldText + ":</td><td>" + fieldData + "</td></tr>");
+});
+
 $(document).on("tap", ".dbupdate", function() {
 
 	var pageID = $.mobile.activePage.attr('id');
@@ -427,7 +552,7 @@ function initDB() {
 	/* Initialise. If the database doesn't exist, it is created */
 	var dbname = globals.activationCode;
 	
-	console.log("initDB with dbname = " + dbname);
+	//console.log("initDB with dbname = " + dbname);
 	
 	var lib = new localStorageDB(dbname, localStorage);
 	
@@ -440,7 +565,7 @@ function initDB() {
 	if( globals.lib.isNew() ) {
 
 		// create the "teams" table
-		globals.lib.createTable("teams", ["name", "gender", "sport", "league"]);	
+		globals.lib.createTable("teams", ["name", "gender", "sport", "league", "xdata"]);	
 		
 		// create additional tables
 		globals.lib.createTable("players", ["name", "team", "sport", "jersey", "age", "exp", "rank", "phone", "email", "pname", "pphone", "pemail"]);
@@ -514,6 +639,8 @@ $(document).ready(function() {
 		var tabs = '';
 		var accordion = '';
 		var teamID = 0;
+		var xdata = '';
+		var parts, title;
 		
 		for( var i in sports ) {
 			tabs += '<a id="sports-tab-' + sportCount + '" class="tab open ui-btn-b" ref="tab-sport-' + sportCount + '" data-role="button" data-inline="true">' + i.capitalize() + '</a>';
@@ -531,7 +658,7 @@ $(document).ready(function() {
 				accordion += '<div class="ui-grid-b">';
 				
 				/* column 1 */
-				accordion += '<div class="ui-block-a"><h4>Team Data</h4>';
+				accordion += '<div class="ui-block-a"><h4>Team Data &nbsp;&nbsp;&nbsp;<a href="#createTeam" id="editTeamData" data-role=button data-mini=true data-inline=true teamID="' + teamID + '" sportKey="' + sports[i][j].sport + '">Edit</a></h4>';
 				accordion += '<table><tr>';
 				
 				accordion += '<td>Girls/Boys:</td>';
@@ -541,6 +668,20 @@ $(document).ready(function() {
 				accordion += '<td>' + sports[i][j].league + '</td>';
 	
 				/* additional, custom fields */
+				console.log(sports[i][j]);
+				
+				xdata = sports[i][j].xdata;
+				
+				if ( xdata != undefined ) {
+					for( var xd in xdata ) {
+					
+						parts = xd.split('_');
+						title = data.fields[parts[0]][0];
+						
+						accordion += '<tr><td>' + title + ':</td><td>' + xdata[xd] + '</td></tr>';
+					}
+				}
+				
 				accordion += '</tr></table></div>';
 				
 				/* column 2 */

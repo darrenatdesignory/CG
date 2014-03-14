@@ -55,6 +55,7 @@
 					<tr>
 						<td style="width:90%;"><h3>Welcome Back!</h3></td>
 						<td align=right>handle@domain.com</td>
+						<td>&nbsp;&nbsp;</td>
 						<td align=right><a data-role="button" href="#loginRegister" data-inline="true" data-mini="true">Logout</a></td>
 					</tr>
 				</table>
@@ -81,76 +82,7 @@
 					<div data-role="collapsible" data-collapsed="false">
 						<h3>Team A</h3>
 						<p>I'm the collapsibleset content for section A.</p>
-					</div>
-					<div data-role="collapsible">
-						<h3>Team B</h3>
-						<p>I'm the collapsibleset content for section B.</p>
-					</div>
-					<div data-role="collapsible">
-						<h3>Team C</h3>
-						<p>I'm the collapsibleset content for section B.</p>
-					</div>
-					<div data-role="collapsible">
-						<h3>Team D</h3>
-						<p>I'm the collapsibleset content for section B.</p>
-					</div>								
-				</div>
-			
-				<div class="tab-content" data-role="collapsible-set" id="tab-sport-2">
-					<div data-role="collapsible" data-collapsed="false">
-						<h3>Team F</h3>
-						<p>I'm the collapsibleset content for section A.</p>
-					</div>
-					<div data-role="collapsible">
-						<h3>Team G</h3>
-						<p>I'm the collapsibleset content for section B.</p>
-					</div>
-					<div data-role="collapsible">
-						<h3>Team H</h3>
-						<p>I'm the collapsibleset content for section B.</p>
-					</div>
-					<div data-role="collapsible">
-						<h3>Team I</h3>
-						<p>I'm the collapsibleset content for section B.</p>
-					</div>								
-				</div>
-			
-				<div class="tab-content" data-role="collapsible-set" id="tab-sport-3">
-					<div data-role="collapsible" data-collapsed="false">
-						<h3>Team J</h3>
-						<p>I'm the collapsibleset content for section A.</p>
-					</div>
-					<div data-role="collapsible">
-						<h3>Team K</h3>
-						<p>I'm the collapsibleset content for section B.</p>
-					</div>
-					<div data-role="collapsible">
-						<h3>Team L</h3>
-						<p>I'm the collapsibleset content for section B.</p>
-					</div>
-					<div data-role="collapsible">
-						<h3>Team M</h3>
-						<p>I'm the collapsibleset content for section B.</p>
-					</div>								
-				</div>
-			
-				<div class="tab-content" data-role="collapsible-set" id="tab-sport-4">
-					<div data-role="collapsible" data-collapsed="false">
-						<h3>Team N</h3>
-						<p>I'm the collapsibleset content for section A.</p>
-					</div>
-					<div data-role="collapsible">
-						<h3>Team O</h3>
-						<p>I'm the collapsibleset content for section B.</p>
-					</div>
-					<div data-role="collapsible">
-						<h3>Team P</h3>
-						<p>I'm the collapsibleset content for section B.</p>
-					</div>
-					<div data-role="collapsible">
-						<h3>Team Q</h3>
-						<p>I'm the collapsibleset content for section B.</p>
-					</div>								
+					</div>							
 				</div>
 			</div>							
 		</div>
@@ -261,6 +193,7 @@
 	<!-- setup wizard, step 2 -->
 	<div data-role="page" id="createTeam" data-title="Create a Team">
 		<div data-role="content">
+		
 			<div>
 				<h2>Step 2: Create a <span class="globals" var="sportName"></span> team</h2>
 			</div>
@@ -269,7 +202,8 @@
 			
 			<div>
 				<table>
-					<tr><td>Team Name: </td><td><input id="txtNewTeamName" type="text" data-inline="true" /></td></tr>
+					<tr><td width="150" nowrap>Team Name: </td><td><input id="txtNewTeamName" type="text" data-inline="true" /></td></tr>
+					
 					<tr><td>Girls/Boys: </td><td>
 					<select name="gender" id="gender" data-inline="true">
 						<option value="Boys">Boys</option>
@@ -279,18 +213,24 @@
 					</td></tr>
 					
 					<tr><td>League: </td><td>
-					<select name="league" id="league" data-inline="true">
-						<option value="AYSO">AYSO</option>
-						<option value="Adult League">Adult League</option>
-						<option value="Club">Club</option>
-						<option value="College">College</option>
-						<option value="High School">High School</option>
-						<option value="Junior High">Junior High</option>
-						<option value="Professional">Professional</option>
-					</select>
+					
+						<!-- populate this select list with data from data-en.js -->
+						<select name="league" id="league" data-inline="true" class="jsdata" key1="leagues" key2="globals.sportKey">
+						</select>
+
 					</td></tr>
 					
-					<tr><td>Add Data: </td><td><a data-inline="true" data-role="button" href="#adddata">New Data</a></td></tr>
+					<tr id="addDataRow"><td>Other Info: </td>
+					
+						<td>
+							<!--
+							<a data-inline="true" data-role="button" href="#adddata">New Data</a>-->
+							<select name="addData" id="addData" data-inline="true" class="jsdata" key1="fields">
+							</select>
+							
+							<a id="addDataBtn" data-inline="true" data-role="button" href="#">Add</a>
+						<td>
+					</tr>
 				
 				</table>
 			
@@ -479,25 +419,27 @@
 									<h3>Position Information</h3>
 								</div>
 							
-							
+<!--
+<select name="league" id="league" data-inline="true" class="db-js" key1="leagues" key2="globals.sportKey">
+-->							
 								<div>
 									<!-- position 1 -->
-									<select id="lstPositionInfo1" data-inset="true"  class="jsdata" key="positions">
+									<select id="lstPositionInfo1" data-inset="true"  class="jsdata" key1="positions" key2="globals.sportKey">
 										<option>Position 1</option>
 									</select>
 								
 									<!-- position 2 -->
-									<select id="lstPositionInfo2" data-inset="true"  class="jsdata" key="positions">
+									<select id="lstPositionInfo2" data-inset="true"  class="jsdata" key1="positions" key2="globals.sportKey">
 										<option>Position 2</option>
 									</select>
 								
 									<!-- position 3 -->
-									<select id="lstPositionInfo3" data-inset="true"  class="jsdata" key="positions">
+									<select id="lstPositionInfo3" data-inset="true"  class="jsdata" key1="positions" key2="globals.sportKey">
 										<option>Position 3</option>
 									</select>
 								
 									<!-- position 4 -->
-									<select id="lstPositionInfo4" data-inset="true"  class="jsdata" key="positions">
+									<select id="lstPositionInfo4" data-inset="true"  class="jsdata" key1="positions" key2="globals.sportKey">
 										<option>Position 4</option>
 									</select>															
 								</div>
