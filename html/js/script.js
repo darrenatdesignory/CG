@@ -569,6 +569,8 @@ function initDB() {
 		
 		// create additional tables
 		globals.lib.createTable("players", ["name", "team", "sport", "jersey", "age", "exp", "rank", "phone", "email", "pname", "pphone", "pemail"]);
+		
+		globals.lib.createTable("games", ["field", "team", "location", "date", "time", "environ", "field", "hscore", "ascore", "environ1", "environ2", "environ3", "environ4", "refh", "ref1", "ref2"]);
 
 		commit(); /* commits local and remote */
 	}

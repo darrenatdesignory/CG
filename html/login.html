@@ -26,6 +26,11 @@
 	<script src="js/jquery.getUrlParam.js"></script>
 	<script src="js/localstoragedb.js"></script>
 	
+	<!-- datebox for gamedata screens -->
+	<script src="js/jqm-datebox.core.js"></script>
+	<script src="js/jqm-datebox.mode.datebox.js"></script>
+	<script type="text/javascript" src="js/i8n/jquery.mobile.datebox.i18en_US.utf8.js"></script>	
+	
 	<!-- methods for cloudant storage & syncing -->
 	<script src="js/db.js"></script>
 	
@@ -38,6 +43,7 @@
 	<script src="js/fastclick.js"></script>
 
 	<link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" href="css/jqm-datebox.css">
 </head>
 <body class="container">
 
@@ -575,7 +581,175 @@
 	
 	<div data-role="page" id="setupGame">
 		<div data-role="content">
-			Setup game page
+<div>
+				<table width="100%">
+					<tr>
+						<td>
+							<h2>New Game Data</h2>
+						</td>
+						<td align="right">
+							<h2>Team: <span class="globals" var="currentTeam"></span></h2>
+						</td>
+					</tr>
+				</table>
+				
+			</div>
+			
+			<div><hr class="padded" /></div>
+			
+			<div>
+				<table width="100%">
+					<tr>
+						<td width="50%" valign="top">
+							<!-- players & sports -->
+							<table width="100%">
+							
+								<tr>
+									<td>Home Field:</td>
+									<td>
+										<div class="ui-field-contain">
+											<fieldset data-role="controlgroup" data-type="horizontal">
+												<input name="game-field" id="game-field-home" type="radio" value="Home" />
+												<label for="game-field-home">Home</label>
+												
+												<input name="game-field" id="game-field-away" type="radio" value="Away" />
+												<label for="game-field-away">Away</label>
+											</fieldset>
+										</div>
+									</td>
+								</tr>
+								
+								<tr>
+									<td>Against Team:</td>
+									
+									<!--
+<input id="txtPlayerInfoName" type="text" data-inline="true" class="db" dbtable="players" dbfield="name" var="currentPlayer" /									
+									-->
+									
+									<td><input data-inline="true" type="text" class="db" dbtable="games" dbfield="team" /></td>
+								</tr>
+								
+								<tr>
+									<td>Location:</td>
+									<td>Map</td>
+								</tr>
+								
+								<tr>
+									<td>Date:</td>
+									<td><input type="date" data-role="datebox" name="somedate" data-options='{"mode": "datebox", "useNewStyle":true}' />
+									</td>
+								</tr>
+								
+								<tr>
+									<td>Time:</td>
+									<td><input type="date" data-role="datebox" name="somedate" data-options='{"mode": "timebox", "useNewStyle":true}' />
+									</td>
+								</tr>
+								
+								<tr>
+									<td>Environment:</td>
+									<td>
+										<fieldset data-role="controlgroup" data-type="horizontal">
+											<input name="game-environment" id="game-environment-indoor" type="radio" value="Indoor" />
+											<label for="game-environment-indoor">Indoor</label>
+											
+											<input name="game-environment" id="game-environment-outdoor" type="radio" value="Outdoor" />
+											<label for="game-environment-outdoor">Outdoor</label>
+										</fieldset>
+									</td>
+								</tr>
+								
+								<tr>
+									<td>Field:</td>
+									<td>
+									
+										<fieldset data-role="controlgroup" data-type="horizontal">
+											<input name="game-field" id="game-field-turf" type="radio" value="Turf" />
+											<label for="game-field-turf">Turf</label>
+											
+											<input name="game-field" id="game-field-grass" type="radio" value="Grass" />
+											<label for="game-field-grass">Grass</label>
+										</fieldset>
+									</td>
+								</tr>
+								
+								<tr>
+									<td>Score:</td>
+									<td>H: A:</td>
+								</tr>
+							
+								<!--
+								<tr>
+									<td valign="bottom">
+										<p>Assigned Players</p>
+									</td>
+									<td align="right">
+										<a id="removeFromTeam" data-role="button" data-inline="true">Remove From Team &raquo;</a>
+									</td>
+								</tr>
+								
+								<tr>
+									<td colspan=2>
+				
+										<ul id="assignedPlayers" data-inset="true" data-role="listview">
+										</ul>
+				
+									</td>
+								</tr>
+								<tr>
+									<td colspan=2>
+										<a data-role="button" data-inline="true" href="#" data-rel="back">&laquo; Back</a>
+									</td>
+								</tr>
+								-->							
+
+							</table>
+						</td>
+						<td valign="top">
+							<!-- list of current players -->
+							<table width="100%">
+								<tr>
+									<td colspan=2>
+										<h2>Environment Information</h2>
+									</td>
+								</tr>
+								<tr>
+									<td colspan=2>
+							
+										<ul id="environmentInfo" data-inset="true" data-role="listview" class="dblist" dbtable="games" dbfield="environ1">
+											<!-- this list to be populated from the localstorage database -->
+										</ul>
+
+									</td>
+								</tr>
+								<tr>
+									<td colspan=2>
+										<h2>Referees</h2>
+									</td>
+								</tr>	
+								<tr>
+									<td>Head:</td>
+									<td>[input] [select]</td>
+								</tr>
+								
+								<tr>
+									<td>Line 1:</td>
+									<td>[input] [select]</td>
+								</tr>
+								
+								<tr>
+									<td>Line 2:</td>
+									<td>[input] [select]</td>
+								</tr>
+								
+							</table>	
+
+						</td>
+					</tr>
+				</table>
+			</div>
+
+		
 		</div>
 	</div>
 	
