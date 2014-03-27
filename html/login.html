@@ -39,7 +39,7 @@
 	
 	<!-- UI bindings -->
 	<script src="js/script.js"></script>
-	<script src="js/data-en.js"></script>
+	<script src="js/data-en2.js"></script>
 	<script src="js/fastclick.js"></script>
 
 	<link rel="stylesheet" href="css/styles.css">
@@ -97,7 +97,7 @@
 	<!-- page -->
 	<div data-role="page" data-title="Login/Register" id="loginRegister">
 
-		<div data-role="content">
+		<div data-role="main" class="ui-content">
 			<div id="page"></div>
 			
 			<p>
@@ -115,7 +115,7 @@
 						<td><input type=text data-inline="true" id="activationCode" /></td>
 						<td>
 						
-							<a data-role="button" href="#activateAccount" data-transition="fade" id="activateAccount">Activate</a>						
+							<a data-role="button" href="#activateAccount" data-transition="fade" id="activateAccountBtn">Activate</a>						
 						</td>
 					</tr>
 				</table>
@@ -162,7 +162,7 @@
 	
 	<!-- tab 2: choose a sport (setup wizard, step 1) -->
 	<div data-role="page" id="chooseSport" data-title="Choose a Sport">
-		<div data-role="content">
+		<div data-role="main" class="ui-content">
 			<div>
 			<h2>Step 1. Choose a sport:
 				<select name="selChooseSport" id="selChooseSport" data-inline="true">
@@ -198,7 +198,7 @@
 	
 	<!-- setup wizard, step 2 -->
 	<div data-role="page" id="createTeam" data-title="Create a Team">
-		<div data-role="content">
+		<div data-role="main" class="ui-content">
 		
 			<div>
 				<h2>Step 2: Create a <span class="globals" var="sportName"></span> team</h2>
@@ -221,7 +221,7 @@
 					<tr><td>League: </td><td>
 					
 						<!-- populate this select list with data from data-en.js -->
-						<select name="league" id="league" data-inline="true" class="jsdata" key1="leagues" key2="globals.sportKey">
+						<select name="league" id="league" data-inline="true" class="jsdata" key2="leagues" key1="globals.sportKey" type="select">
 						</select>
 
 					</td></tr>
@@ -231,7 +231,7 @@
 						<td>
 							<!--
 							<a data-inline="true" data-role="button" href="#adddata">New Data</a>-->
-							<select name="addData" id="addData" data-inline="true" class="jsdata" key1="fields">
+							<select name="addData" id="addData" data-inline="true" class="jsdata" key1="fields" type="select">
 							</select>
 							
 							<a id="addDataBtn" data-inline="true" data-role="button" href="#">Add</a>
@@ -252,7 +252,7 @@
 			<div data-role="header" data-theme="a" class="ui-corner-top">
 				<h1>Attention!</h1>
 			
-				<div data-role="content">
+				<div data-role="main" class="ui-content">
 					<p>Please enter a team name.</p>
 					<p><a data-role="button" data-rel="back">Try Again</a></p>
 				</div>
@@ -262,7 +262,7 @@
 	</div>		
 	
 	<div data-role="page" id="addPlayers">
-		<div data-role="content">
+		<div data-role="main" class="ui-content">
 			<div>
 				<table width="100%">
 				<tr><td>
@@ -339,7 +339,7 @@
 	</div>
 	
 	<div data-role="page" id="viewPlayer">
-		<div data-role="content">
+		<div data-role="main" class="ui-content">
 			<div>
 				<table width="100%">
 				<tr><td>
@@ -426,26 +426,26 @@
 								</div>
 							
 <!--
-<select name="league" id="league" data-inline="true" class="db-js" key1="leagues" key2="globals.sportKey">
+<select name="league" id="league" data-inline="true" class="db-js" key2="leagues" key1="globals.sportKey" type="select">
 -->							
 								<div>
 									<!-- position 1 -->
-									<select id="lstPositionInfo1" data-inset="true"  class="jsdata" key1="positions" key2="globals.sportKey">
+									<select id="lstPositionInfo1" data-inset="true"  class="jsdata" key2="positions" key1="globals.sportKey" type="select">
 										<option>Position 1</option>
 									</select>
 								
 									<!-- position 2 -->
-									<select id="lstPositionInfo2" data-inset="true"  class="jsdata" key1="positions" key2="globals.sportKey">
+									<select id="lstPositionInfo2" data-inset="true"  class="jsdata" key2="positions" key1="globals.sportKey" type="select">
 										<option>Position 2</option>
 									</select>
 								
 									<!-- position 3 -->
-									<select id="lstPositionInfo3" data-inset="true"  class="jsdata" key1="positions" key2="globals.sportKey">
+									<select id="lstPositionInfo3" data-inset="true"  class="jsdata" key2="positions" key1="globals.sportKey" type="select">
 										<option>Position 3</option>
 									</select>
 								
 									<!-- position 4 -->
-									<select id="lstPositionInfo4" data-inset="true"  class="jsdata" key1="positions" key2="globals.sportKey">
+									<select id="lstPositionInfo4" data-inset="true"  class="jsdata" key2="positions" key1="globals.sportKey" type="select">
 										<option>Position 4</option>
 									</select>															
 								</div>
@@ -497,7 +497,7 @@
 	</div>
 	
 	<div data-role="page" id="assignPlayers">
-		<div data-role="content">
+		<div data-role="main" class="ui-content">
 			<div>
 				<table width="100%">
 					<tr>
@@ -580,14 +580,14 @@
 	</div>
 	
 	<div data-role="page" id="setupGame">
-		<div data-role="content">
+		<div data-role="main" class="ui-content">
 <div>
 				<table width="100%">
 					<tr>
-						<td>
+						<td id="setupGameTitle">
 							<h2>New Game Data</h2>
 						</td>
-						<td align="right">
+						<td align="right" id="setupGameTeam">
 							<h2>Team: <span class="globals" var="currentTeam"></span></h2>
 						</td>
 					</tr>
@@ -608,13 +608,15 @@
 									<td>Home Field:</td>
 									<td>
 										<div class="ui-field-contain">
-											<fieldset data-role="controlgroup" data-type="horizontal">
-												<input name="game-field" id="game-field-home" type="radio" value="Home" />
+											<form>
+											  <fieldset data-role="controlgroup" data-type="horizontal">
+												<input name="game-field" id="game-field-home" type="radio" value="Home" data-theme="d">
 												<label for="game-field-home">Home</label>
 												
-												<input name="game-field" id="game-field-away" type="radio" value="Away" />
+												<input name="game-field" id="game-field-away" type="radio" value="Away" data-theme="d">
 												<label for="game-field-away">Away</label>
-											</fieldset>
+											  </fieldset>
+											</form>
 										</div>
 									</td>
 								</tr>
@@ -649,27 +651,18 @@
 								<tr>
 									<td>Environment:</td>
 									<td>
-										<fieldset data-role="controlgroup" data-type="horizontal">
-											<input name="game-environment" id="game-environment-indoor" type="radio" value="Indoor" />
-											<label for="game-environment-indoor">Indoor</label>
-											
-											<input name="game-environment" id="game-environment-outdoor" type="radio" value="Outdoor" />
-											<label for="game-environment-outdoor">Outdoor</label>
-										</fieldset>
+										<div class="ui-field-contain">
+											<fieldset data-role="controlgroup" data-type="horizontal" class="jsdata" type="radio" key2="environments" key1="globals.sportKey" type="radio" id="game-environment"></fieldset>
+										</div>
 									</td>
 								</tr>
 								
 								<tr>
 									<td>Field:</td>
 									<td>
-									
-										<fieldset data-role="controlgroup" data-type="horizontal">
-											<input name="game-field" id="game-field-turf" type="radio" value="Turf" />
-											<label for="game-field-turf">Turf</label>
-											
-											<input name="game-field" id="game-field-grass" type="radio" value="Grass" />
-											<label for="game-field-grass">Grass</label>
-										</fieldset>
+										<div class="ui-field-contain">
+											<fieldset data-role="controlgroup" data-type="horizontal" class="jsdata" type="radio" key2="fields" key1="globals.sportKey" type="radio" id="game-field"></fieldset>
+										</div>
 									</td>
 								</tr>
 								
@@ -716,7 +709,15 @@
 								<tr>
 									<td colspan=2>
 							
+										<select class="jsdata" key1="environments" key2="weather" type="select" id="game-environment1"></select>
+										
+										<select class="jsdata" key1="environments" key2="turf" type="select" id="game-environment2"></select>																	
+
+										<select class="jsdata" key1="environments" key2="temperature" type="select" id="game-environment3"></select>	
+
+										<!--
 										<ul id="environmentInfo" data-inset="true" data-role="listview" class="dblist" dbtable="games" dbfield="environ1">
+										-->
 											<!-- this list to be populated from the localstorage database -->
 										</ul>
 
@@ -755,28 +756,28 @@
 	
 	<!-- tab 3: calendar -->
 	<div data-role="page" id="calendar">
-		<div data-role="content">
+		<div data-role="main" class="ui-content">
 			This is the calendar page
 		</div>
 	</div>	
 	
 	<!-- tab 4: media -->
 	<div data-role="page" id="media">
-		<div data-role="content">
+		<div data-role="main" class="ui-content">
 			This is the photos/videos page
 		</div>
 	</div>		
 	
 	<!-- tab 5: playbook -->
 	<div data-role="page" id="playbook">
-		<div data-role="content">
+		<div data-role="main" class="ui-content">
 			This is the playbook page
 		</div>
 	</div>			
 	
 	<!-- tab 6: reports -->
 	<div data-role="page" id="reports">
-		<div data-role="content">
+		<div data-role="main" class="ui-content">
 			This is the reports page
 		</div>
 	</div>		
@@ -784,7 +785,7 @@
 	<!-- coach account activation, step 2 -->
 	<div data-role="page" id="activateAccount">
 
-		<div data-role="content">
+		<div data-role="main" class="ui-content">
 			<p><b>Account Activation Step 2</b></p>
 			
 			<p>Thank you for registering with Coach Gizmo!</p>
@@ -843,7 +844,7 @@
 			<div data-role="header" data-theme="a" class="ui-corner-top">
 				<h1>Attention!</h1>
 			
-				<div data-role="content">
+				<div data-role="main" class="ui-content">
 					<p>Please enter a team name.</p>
 					<p><a data-role="button" data-rel="back">Try Again</a></p>
 				</div>
@@ -857,7 +858,7 @@
 			<div data-role="header" data-theme="a" class="ui-corner-top">
 				<h1>Attention!</h1>
 		
-				<div data-role="content">
+				<div data-role="main" class="ui-content">
 					<p>Password must contain:</p>
 			
 					<p>
@@ -878,7 +879,7 @@
 			<div data-role="header" data-theme="a" class="ui-corner-top">
 				<h1>Attention!</h1>
 		
-				<div data-role="content">
+				<div data-role="main" class="ui-content">
 					<p>Please enter a valid email address.</p>
 					<p><a data-role="button" data-rel="back">Try Again</a></p>
 				</div>
@@ -896,7 +897,7 @@
 		<div data-role="header">
 			<h1>Terms of Use</h1>
 		</div>
-		<div data-role="content">
+		<div data-role="main" class="ui-content">
 		<h2>
 			Web Site Terms and Conditions of Use
 		</h2>

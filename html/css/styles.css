@@ -24,11 +24,25 @@ body {
 
 body * {
 	font-family: Arial;
+	text-shadow: none !important;
+}
+
+td {
+	padding-right: 20px;
+}
+
+.ui-radio-on {
+	background-color: darkgray !important;
+	color: white !important;
 }
 
 .ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper {
 	background-color: transparent;
 	background: none;
+}
+
+.ui-field-contain > label ~ [class*="ui-"], .ui-field-contain .ui-controlgroup-controls {
+    width: 100%;
 }
 
 .hidden {

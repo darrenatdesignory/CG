@@ -1,4 +1,4 @@
-/* Coach Gizmo player position file */
+/* Coach Gizmo UI data file */
 
 "use strict;"
 
@@ -12,6 +12,27 @@ var data = {
 		season 		: [ 'Season', 'text', 50 ],
 		teamparent 	: [ 'Team Parent', 'text', 70 ]
 	},
+	environments : {
+		weather : [
+			'Cloudy',
+			'Light Drizzle',
+			'Hail',
+			'Rain',
+			'Sleet',
+			'Sunny'
+		],
+		turf : [
+			'Slippery',
+			'Dry',
+			'Muddy'
+		],
+		temperature : [
+			'Cold',
+			'Average',
+			'Hot', 
+			'Sweltering'
+		]
+	}, 	
 	football : {
 		leagues : [
 			'Pop Warner',
@@ -20,6 +41,14 @@ var data = {
 			'Junior High',
 			'High School',
 			'Professional'
+		],
+		environments : [
+			'Stadium',
+			'Non-stadium'
+		],
+		fields : [
+			'Turf',
+			'Grass'
 		],
 		positions : [
 			['Defence','Outside Linebacker','OLB'],
@@ -57,6 +86,14 @@ var data = {
 			'High School',
 			'Professional'
 		],
+		environments : [
+			'Indoor',
+			'Outdoor'
+		],	
+		fields : [
+			'Turf',
+			'Grass'
+		],			
 		positions : [
 			['','Goalie','G'],
 			['Defense','Left Fullback','LF'],
@@ -86,6 +123,14 @@ var data = {
 			'College',
 			'Professional'
 		],
+		environments : [
+			'Large Field',
+			'Small Field'
+		],
+		fields : [
+			'Turf',
+			'Grass'
+		],			
 		positions : [
 			['Infield','Catcher','C'],
 			['Pitcher','Ace Pitcher','AP'],
@@ -116,6 +161,14 @@ var data = {
 			'College',
 			'Professional'
 		],
+		environments : [
+			'Indoor',
+			'Outdoor'
+		],
+		fields : [
+			'Turf',
+			'Grass'
+		],		
 		positions : [
 			['Infield','Catcher','C'],
 			['Pitcher','Ace Pitcher','AP'],
@@ -146,6 +199,14 @@ var data = {
 			'College',
 			'Professional'
 		],
+		environments : [
+			'Indoor',
+			'Outdoor'
+		],
+		fields : [
+			'Turf',
+			'Grass'
+		],		
 		positions : [
 			['','Point Gaurd','PG'],
 			['','Shooting Gaurd','SG'],
@@ -163,6 +224,14 @@ var data = {
 			'College',
 			'Professional'
 		],
+		environments : [
+			'Indoor',
+			'Outdoor'
+		],
+		fields : [
+			'Turf',
+			'Grass'
+		],			
 		positions : [
 			['','Goaltender','G'],
 			['Line 1','Left Defenseman','LD'],
@@ -191,6 +260,14 @@ var data = {
 			'College',
 			'Professional'
 		],
+		environments : [
+			'Indoor',
+			'Outdoor'
+		],
+		fields : [
+			'Turf',
+			'Grass'
+		],			
 		lacrosse : [
 			['','Goalie','G'],
 			['Defense','Left Defensemen','LD'],

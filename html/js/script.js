@@ -222,6 +222,9 @@ $(document).on("tap", "#btnAddPlayer", function() {
 
 $(document).on("tap", "#btnCreateTeam", function() {
 
+	console.log("btnCreateTeam globals");
+	console.log(globals);
+
 	var newTeam = $("#txtNewTeamName").val();
 		
 	if ( newTeam == '' ) {	
@@ -229,11 +232,14 @@ $(document).on("tap", "#btnCreateTeam", function() {
 		$("#noTeamNamePopup").trigger("click");
 	}
 	else {
-		globals.currentTeam = $("#txtNewTeamName").val();
+		globals.currentTeam = newTeam;
+		
+		//console.log(globals);
 		
 		/* fetch the values of "added fields" */
 		
 		var dataToSave = new Object();
+		
 		dataToSave.name = globals.currentTeam;
 		dataToSave.gender = $("#gender").val();
 		dataToSave.league = $("#league").val();
@@ -252,6 +258,7 @@ $(document).on("tap", "#btnCreateTeam", function() {
 		var teamID = globals.lib.insert("teams", dataToSave);
 		
 		globals.currentTeamID = teamID;
+		
 		
 		commit();
 		
@@ -282,22 +289,20 @@ $(document).on("tap", "#lstCurrentPlayers li, .playerName", function() {
 	
 	globals.currentPlayer = playerName;
 	globals.currentPlayerID = playerID;
-	
-	console.log(globals);
 });
 
 $(document).on("tap", "#createTeam", function() {
 
-				/*
-				accordion += '<div class="ui-block-a"><h4>Team Data &nbsp;&nbsp;&nbsp;<a href="#createTeam" data-role=button data-mini=true data-inline=true teamID="' + teamID + '" sportKey="' + sports[i][j].sport + '">Edit</a></h4>';
-				*/
-				
-				
-	globals.sportKey = $("#selChooseSport").val();
-	globals.sportName = $("#selChooseSport option:selected").text();
+	var newSportKey = $("#selChooseSport").val();
+	var newSportName = $("#selChooseSport option:selected").text();
 	
-	/* forces add mode for the create team page */
-	globals.currentTeamID = false;
+	if ( newSportKey != undefined ) {
+		globals.sportKey = newSportKey; //$("#selChooseSport").val();
+		globals.sportName = newSportName; //$("#selChooseSport option:selected").text();
+
+		/* forces add mode for the create team page */
+		globals.currentTeamID = false;
+	}
 });
 
 /* tap event for "Edit" button next to "Team Data" */
@@ -335,16 +340,15 @@ $(document).on('pagebeforeshow', function() {
 			var teamObj = sportdb.getTeam(globals.currentTeamID);
 			
 			globals.currentTeam = teamObj.name;
+			// globals.sportKey = teamObj.sport;
 			
-			$("div h2").html("Edit team: " + teamObj.name);
+			$("#setupGameTeam h2").html("Edit team: " + teamObj.name);
 			
 			$("#txtNewTeamName").val(teamObj.name);
 			$("select#gender").val(teamObj.gender);
 			$("select#league").val(teamObj.league);
 			
 			/* need to add the 'xdata' field data */
-			
-			console.log(teamObj);
 		}
 	}
 	
@@ -360,19 +364,38 @@ $(document).on('pagebeforeshow', function() {
 		// what about select lists??
 	});
 	
-	/* A select that must be populated from the javascript data file */
-	$("#" + pageID + " select.jsdata").each(function() {
+	/* A field list (select, fieldset, etc) that must be populated from the javascript data file */
+	$("#" + pageID + " .jsdata").each(function() {
 
-		var selectObj = $(this);
+		var selectObj = $(this); /* this may be a fieldset, list, or select list */
+		var selectObjType = $(this).attr('type');
+		
+		console.log("selectObjType = " + selectObjType);
+		
+		if ( selectObjType == undefined ) {
+			console.log(selectObj);
+		}
 		
 		var dbKey1 = $(this).attr('key1');
 		var dbKey2 = $(this).attr('key2');
+		
+		if ( selectObjType == 'radio' ) {
+			console.log("dbKey1 = " + dbKey1 );
+			console.log("dbKey2 = " + dbKey2 );
+		}
+		
 		var dataToPopulate = "";
+				
+		if ( dbKey1 != undefined ) {
+			if ( dbKey1.indexOf("globals.") != -1 ) {
+				dbKey1 = dbKey1.replace("globals.", "");
+				dbKey1 = globals[dbKey1];
+			}
+		}
 	
 		if ( dbKey2 != undefined ) {
-		
 			if ( dbKey2.indexOf("globals.") != -1 ) {
-				dbKey2 = dbKey2.replace("globals.","");
+				dbKey2 = dbKey2.replace("globals.", "");
 				dbKey2 = globals[dbKey2];
 			}
 		
@@ -390,25 +413,72 @@ $(document).on('pagebeforeshow', function() {
 		var optionsValues = "";
 		var i = 0;
 		var selected = "";
+		var checked = "";
+		var radioClass = "";
 		
 		$.each(dataToPopulate, function() {
 			//selectObj.append($("<option />").val(this).text(this));
+			++i;
 			
-			selected = (++i <= 1) ? "selected" : "";
+			selected = (i <= 1) ? "selected" : "";
+			checked = (i <= 1) ? " checked=checked " : "";
 			
 			if ( Array.isArray(this) ) {
-
+			
+			/*
+		 <input type="radio" name="radio-choice-2" id="radio-choice-1" value="choice-1" checked="checked">
+<label for="radio-choice-1">Cat</label>	
+			*/
+			
 				/* this is a complex value list, like "fields" */
-				optionsValues += "<option fieldtype='" + this[1][1] + "' fieldsize='" + this[1][2] + "' " + selected + " value='" + this[0] + "'>" + this[1][0] + "</option>";
+				
+				if ( selectObjType == 'radio' ) {
+				
+					/* we don't have any of these right now */
+					
+				}
+				else {
+					/* default to select list */
+					optionsValues += "<option fieldtype='" + this[1][1] + "' fieldsize='" + this[1][2] + "' " + selected + " value='" + this[0] + "'>" + this[1][0] + "</option>";
+				}
 			}
 			else {
 				/* this is a simple value list */
-				optionsValues += "<option " + selected + " value='" + this + "'>" + this + "</option>";
+				if ( selectObjType == 'radio' ){
+				
+					if ( i == 1 ) {
+						radioClass = "ui-first-child";
+					}
+					else if ( i == dataToPopulate.length ) {
+						radioClass = "ui-last-child";
+					}
+					else {
+						radioClass = "";
+					}
+				
+					optionsValues += '<input type="radio" id="' + this + '" name="' + dbKey2 + '" value="' + this + '" ' + checked + ' /><label class="' + radioClass + '" for="' + this + '">' + this + '</label>';
+				}
+				else {
+					optionsValues += "<option " + selected + " value='" + this + "'>" + this + "</option>";
+				}
 			}
 		});
 		
-		selectObj.html(optionsValues);
-		selectObj.selectmenu("refresh");
+		
+		
+		if ( selectObjType == 'radio' ) {
+		
+			selectObj.html('<div class="ui-controlgroup-controls">' + optionsValues + "</div>");
+		
+			selectObj.find('input').each(function() {
+				$(this).checkboxradio();
+				$(this).checkboxradio('refresh');
+			});
+		}
+		else if ( selectObjType == 'select' ) {
+			selectObj.html(optionsValues);
+			selectObj.selectmenu("refresh");
+		}
 	});
 	
 
